@@ -17,7 +17,7 @@ public class Jeu implements Game {
 
     private List<Pieces> listePieces;
     Couleur couleur;
-    boolean castlingPossible = false;
+    boolean possibleCastling = false;
     boolean possibleCapture = false;
 
     public Jeu(Couleur couleur) {
@@ -48,8 +48,6 @@ public class Jeu implements Game {
     @Override
     public boolean move(int xInit, int yInit, int xFinal, int yFinal) {
 
-        //isMoveOk()xInit , yInit , xFinal , yFinal , capture(xFinal , yFinal) , isCastlingPossible);
-        //rajouter la condition isMoveOK
         for (Pieces p : listePieces) {
             if (p.getX() == xInit && p.getY() == yInit) {
                 p.move(xFinal, yFinal);
@@ -101,7 +99,7 @@ public class Jeu implements Game {
     }
 
     public void setCastling() {
-        
+        this.possibleCastling = true ;
     }
 
     public List<PieceIHMs> getPiecesIHM() {
@@ -119,7 +117,20 @@ public class Jeu implements Game {
 
     public static void main(java.lang.String[] args) {
         Jeu j = new Jeu(Couleur.NOIR);
-        j.toString();
+        System.out.println(j.toString());
+        System.out.println("Piece en [0,0] :"+ j.isPieceHere(0,0));
+        System.out.println("Piece en [5,3] :"+ j.isPieceHere(5,3));
+        System.out.println("Test isMoveOK");
+        System.out.println("Move d'un pion OK [3,1] vers [3,3] :" + j.isMoveOk(3, 1, 3, 3, false, false));
+        System.out.println("Move d'un pion non OK [3,1] vers [3,3] :" + j.isMoveOk(3, 1, 3, 4, false, false));
+        System.out.println("Move d'un cavalier OK [1,0] vers [2,2] :" + j.isMoveOk(1, 0, 2, 2, false, false));
+        System.out.println("Move d'un cavalier non OK [1,0] vers [2,3] :" + j.isMoveOk(1, 0, 2, 3, false, false));
+        System.out.println("Test Move");
+        System.out.println("Move d'un pion OK [3,1] vers [3,3]");
+        System.out.println("Avant [3,1] " + j.findPiece(3, 1)+" [3,3] "+j.findPiece(3, 3));
+        j.move(3, 1, 3, 3);
+        System.out.println("Aprés [3,1] " + j.findPiece(3, 1)+" [3,3] "+j.findPiece(3, 3));
+        
     }
 
     @Override
@@ -127,6 +138,7 @@ public class Jeu implements Game {
         String S = "";
         for (Pieces p : listePieces) {
             S += p.toString();
+            S += "\n";
         }
         return S;
 
