@@ -27,12 +27,13 @@ public class Jeu implements Game {
 
     @Override
     public boolean isPieceHere(int x, int y) {
+        boolean res = false;
         for (Pieces p : listePieces) {
             if (p.getX() == x && p.getY() == y) {
-                return true;
+                res = true;
             }
         }
-        return false;
+        return res;
     }
 
     @Override
@@ -44,7 +45,7 @@ public class Jeu implements Game {
         }
         return false;
     }
-
+    
     @Override
     public boolean move(int xInit, int yInit, int xFinal, int yFinal) {
 
