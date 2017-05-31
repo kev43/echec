@@ -135,13 +135,12 @@ public class Jeu implements Game {
 
     @Override
     public String toString() {
-        String S = "";
+        String str = "";
         for (Pieces p : listePieces) {
-            S += p.toString();
-            S += "\n";
+            str += p.toString();
+            str += "\n";
         }
-        return S;
-
+        return str;
     }
 
     private Pieces findPiece(int x, int y) {
