@@ -67,7 +67,7 @@ public class Echiquier implements BoardGames {
         String finalPieceName = jeuCourant.getPieceName(xFinal, yFinal);
         if (finalPieceName != null) {
             Couleur couleur = jeuCourant.getPieceColor(xFinal, yFinal);
-            if ((couleur == Couleur.BLANC && isBlancCourant) || (couleur == Couleur.NOIR && !isBlancCourant)) {
+            if ((couleur == jeuCourant.getCouleur())) {
                 // pièce de la mâme couleur
                 if (jeuCourant.getPieceName(xInit, yInit) == "Roi" && finalPieceName == "Tour") {
                     // tentative de roque
