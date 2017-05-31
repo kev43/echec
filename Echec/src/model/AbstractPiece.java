@@ -67,33 +67,5 @@ public abstract class AbstractPiece implements Pieces {
     public String toString() {
         return name + "[" + couleur + "]" + "(" + x + "," + y + ")";
     }
-    
-    public static void main(String args[]) {
-        
-        boolean res;
-        
-        // TEST TOUR
-        
-        Tour tour = new Tour(Couleur.NOIR, new Coord(0,0));
-        System.out.println(tour.toString());
-        
-        // mouvement autorisé
-        res = tour.move(0, 5);
-        System.out.println(res);
-        System.out.println(tour.toString());
-        
-        // mouvement hors du plateau
-        res = tour.move(-2, 5);
-        System.out.println(res);
-        System.out.println(tour.toString());
-        
-        // mouvement  illégal depuis (0,5)
-        res = tour.isMoveOk(3, 2, false, false);
-        System.out.println(res);
-        
-        // mouvement autorisé
-        res = tour.isMoveOk(4, 5, false, false);
-        System.out.println(res);
-        
-    }
+
 }
