@@ -20,40 +20,75 @@ public class Pion extends AbstractPiece {
     @Override
     public boolean isMoveOk(int xFinal, int yFinal, boolean isCatchOk, boolean isCastlingPossible) {
         
-        // doit avancer sur la même colonne
-        if (xFinal != x) {
-            return false;
-        }
         
         if (couleur == Couleur.BLANC) {
             // déplacement du pion BLANC : "vers le haut" = y décroissant
-            if (y == 6) {
-                // pion blanc sur sa position de départ : peut avancer de deux cases
-                if (yFinal == 6-2) {
-                    return true;
+            if (isCatchOk) {
+                // prise du pion
+                if (yFinal == y-1) {
+                    // ligne au-dessus
+                    if (Math.abs(xFinal - x) == 1) {
+                        // colonne adjaçente
+                        
+                        // ici la capture est autorisée
+                        return true;
+                    }
                 }
-            }
-            
-            if (yFinal < y) {
-                // déplacement d'une case "vers le haut" autorisé pour le pion blanc
-                if (yFinal == y - 1) {
-                    return true;
+            } else {
+                // mouvement normal du pion
+
+                // doit avancer sur la même colonne
+                if (xFinal != x) {
+                    return false;
+                }
+
+                if (y == 6) {
+                    // pion blanc sur sa position de départ : peut avancer de deux cases
+                    if (yFinal == 6-2) {
+                        return true;
+                    }
+                }
+
+                if (yFinal < y) {
+                    // déplacement d'une case "vers le haut" autorisé pour le pion blanc
+                    if (yFinal == y - 1) {
+                        return true;
+                    }
                 }
             }
         } else if (couleur == Couleur.NOIR) {
             // déplacement du pion NOIR : "vers le bas" = y croissant
-
-            if (y == 1) {
-                // pion noir sur sa position de départ : peut avancer de deux cases
-                if (yFinal == 1+2) {
-                    return true;
+            if (isCatchOk) {
+                // prise du pion
+                if (yFinal == y+1) {
+                    // ligne au-dessous
+                    if (Math.abs(xFinal - x) == 1) {
+                        // colonne adjaçente
+                        
+                        // ici la capture est autorisée
+                        return true;
+                    }
                 }
-            }
-            
-            if (yFinal > y) {
-                // déplacement d'une case "vers le bas" autorisé pour le pion noir
-                if (yFinal == y + 1) {
-                    return true;
+            } else {
+                // mouvement normal du pion
+
+                // doit avancer sur la même colonne
+                if (xFinal != x) {
+                    return false;
+                }
+                
+                if (y == 1) {
+                    // pion noir sur sa position de départ : peut avancer de deux cases
+                    if (yFinal == 1+2) {
+                        return true;
+                    }
+                }
+
+                if (yFinal > y) {
+                    // déplacement d'une case "vers le bas" autorisé pour le pion noir
+                    if (yFinal == y + 1) {
+                        return true;
+                    }
                 }
             }
         }
@@ -88,6 +123,11 @@ public class Pion extends AbstractPiece {
         res = pionBlanc.isMoveOk(0, 4, false, false);
         System.out.println(res);
         
+        // prise d'un pion adverse autorisé
+        pionBlanc = new Pion(Couleur.BLANC, new Coord(0,6));
+        res = pionBlanc.isMoveOk(1, 5, true, false);
+        System.out.println(res);
+        
         System.out.println("Déplacements illégaux pion blanc");
         
         // on remet le pion blanc sur sa ligne de départ
@@ -103,6 +143,11 @@ public class Pion extends AbstractPiece {
         // avance de 2 cases alors qu'il n'est pas sur la ligne de départ => interdit
         pionBlanc = new Pion(Couleur.BLANC, new Coord(0,5));
         res = pionBlanc.isMoveOk(0, 3, false, false);
+        System.out.println(res);
+        
+        // mouvement de prise sans que le coup soit une prise
+        pionBlanc = new Pion(Couleur.BLANC, new Coord(0,6));
+        res = pionBlanc.isMoveOk(1, 5, false, false);
         System.out.println(res);
         
         
@@ -129,6 +174,11 @@ public class Pion extends AbstractPiece {
         res = pionNoir.isMoveOk(0, 3, false, false);
         System.out.println(res);
         
+        // prise d'un pion adverse autorisé
+        pionBlanc = new Pion(Couleur.NOIR, new Coord(0,1));
+        res = pionBlanc.isMoveOk(1, 2, true, false);
+        System.out.println(res);
+        
         System.out.println("Déplacements illégaux pion noir");
         
         // on remet le pion blanc sur sa ligne de départ
@@ -144,6 +194,11 @@ public class Pion extends AbstractPiece {
         // avance de 2 cases alors qu'il n'est pas sur la ligne de départ => interdit
         pionNoir = new Pion(Couleur.NOIR, new Coord(0,2));
         res = pionNoir.isMoveOk(0, 4, false, false);
+        System.out.println(res);
+        
+        // mouvement de prise sans que le coup soit une prise
+        pionBlanc = new Pion(Couleur.NOIR, new Coord(0,1));
+        res = pionBlanc.isMoveOk(1, 2, false, false);
         System.out.println(res);
     }
 }
