@@ -21,9 +21,8 @@ public class Jeu implements Game {
     boolean possibleCapture = false;
 
     /**
-     * 
-     * @param couleur 
      * Constructeur d'un jeu
+     * @param couleur 
      */
     public Jeu(Couleur couleur) {
         this.couleur = couleur;
@@ -31,11 +30,10 @@ public class Jeu implements Game {
     }
 
     /**
-     * 
+     * Return True ou false sir la case est occupé ou non
      * @param x
      * @param y
      * @return boolean
-     * Return True ou false sir la case est occupé ou non
      */
     @Override
     public boolean isPieceHere(int x, int y) {
@@ -49,7 +47,7 @@ public class Jeu implements Game {
     }
 
     /**
-     * 
+     * Renvoie un boolean en fonction de la validité d'un déplacement
      * @param xInit position de départ X
      * @param yInit position de départ Y
      * @param xFinal position d'arrivée X
@@ -57,7 +55,6 @@ public class Jeu implements Game {
      * @param isCatchOk si capture possible
      * @param isCastlingPossible si roque possible
      * @return boolean
-     * Renvoi in boolean en fonction de la validité d'un déplacement
      */
     @Override
     public boolean isMoveOk(int xInit, int yInit, int xFinal, int yFinal, boolean isCatchOk, boolean isCastlingPossible) {
@@ -71,13 +68,12 @@ public class Jeu implements Game {
     }
     
     /**
-     * 
+     * Renvoie un boolean en fonction du succès ou de l'échec du déplacement
      * @param xInit position de départ X
      * @param yInit position de départ Y
      * @param xFinal position d'arrivée X
      * @param yFinal position d'arrivée Y
      * @return boolean
-     * Renvoi un boolean en fonction du succès ou de l'échec du déplacement
      */
     @Override
     public boolean move(int xInit, int yInit, int xFinal, int yFinal) {
@@ -134,11 +130,10 @@ public class Jeu implements Game {
     }
 
     /**
-     * 
+     * Renvoie le nom d'une piece
      * @param x
      * @param y
      * @return 
-     * Renvoi le nom d'une piece
      */
     public String getPieceName(int x, int y) {
         String str = null;
@@ -152,9 +147,8 @@ public class Jeu implements Game {
     }
 
     /**
-     * 
+     * Renvoi la couleur du jeu
      * @return 
-     * renvoi la couleur du jeu
      */
     public Couleur getCouleur() {
         return this.couleur;
