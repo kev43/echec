@@ -72,6 +72,8 @@ public abstract class AbstractPiece implements Pieces {
         
         boolean res;
         
+        // TEST TOUR
+        
         Tour tour = new Tour(Couleur.NOIR, new Coord(0,0));
         System.out.println(tour.toString());
         
@@ -92,5 +94,6 @@ public abstract class AbstractPiece implements Pieces {
         // mouvement autorisé
         res = tour.isMoveOk(4, 5, false, false);
         System.out.println(res);
+        
     }
 }
