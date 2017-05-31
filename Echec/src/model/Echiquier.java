@@ -5,6 +5,10 @@
  */
 package model;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  *
  * @author Kevin
@@ -84,16 +88,27 @@ public class Echiquier implements BoardGames {
             }
         }
         
-        move(xInit, yInit, xFinal, yFinal);
+        
         
         return true;
     }
     
     @Override
     public boolean move(int xInit, int yInit, int xFinal, int yFinal) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (isMoveOk(xInit, yInit, xFinal, yFinal)) {
+            return move(xInit, yInit, xFinal, yFinal);
+        }
+        return false;
     }
-
+    
+    public List<PieceIHMs> getPiecesIHM() {
+        List list = new LinkedList();
+        for (Jeu jeu : jeux) {
+            list.addAll(jeu.getPiecesIHM());
+        }
+        return list;
+    }
+    
     @Override
     public boolean isEnd() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
