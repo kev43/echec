@@ -126,12 +126,12 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
 
         int x = e.getX() / (this.getWidth() / 8);
         int y = e.getY() / (this.getHeight() / 8);
-        System.out.println("MouseReleased() - (" + x + "," + y + ")");
+        //System.out.println("MouseReleased() - (" + x + "," + y + ")");
         Coord coordFinal = new Coord(x, y);
 
         boolean moveAllowed = chessGameControler.move(coordInit, coordFinal);
-        System.out.println("moveAllowed=" + moveAllowed);
-
+        //System.out.println("moveAllowed=" + moveAllowed);
+        //System.out.println(chessGameControler.getMessage());
         //if (true) {
         // mouvement autorisé
         if (c instanceof JLabel) {
@@ -180,7 +180,7 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
 
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println(chessGameControler.getMessage() + "\n");
+        System.out.println(chessGameControler.getMessage());
 
         chessBoard.removeAll();
 

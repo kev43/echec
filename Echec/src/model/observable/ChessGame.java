@@ -108,4 +108,10 @@ public class ChessGame extends Observable implements BoardGames{
 		super.addObserver(o);
 		this.notifyObservers(echiquier.getPiecesIHM()); 
 	}
+        
+        public static void main(String args[]) {
+            ChessGame cgame = new ChessGame();
+            
+            System.out.println(cgame.getMessage());
+        }
 }

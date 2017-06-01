@@ -44,5 +44,12 @@ public class ChessGameControler extends AbstractChessGameControler {
 		
 	}
 
+        
+        public static void main(String args[]) {
+            
+             ChessGame cgame = new ChessGame();
+             ChessGameControler controler = new ChessGameControler(cgame);
+             System.out.println(controler.getMessage());
+        }
 	
 }

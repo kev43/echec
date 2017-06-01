@@ -29,6 +29,7 @@ public class Echiquier implements BoardGames {
         jeux = new Jeu[2]; // tableau de taille 2
         jeux[0]= new Jeu(Couleur.BLANC);
         jeux[1]= new Jeu(Couleur.NOIR);
+        message = "Début de la partie";
         
         // Blanc commence
         isBlancCourant = true;
@@ -74,6 +75,7 @@ public class Echiquier implements BoardGames {
                     
                 } else {
                     // coup illégal
+                    this.setMessage("Pas OK : déplacement interdit");
                     return false;
                 }
             } else {
@@ -88,7 +90,7 @@ public class Echiquier implements BoardGames {
         }
         
         
-        
+        this.setMessage("OK : déplacement simple");
         return true;
     }
     
@@ -167,6 +169,8 @@ public class Echiquier implements BoardGames {
         // nouveau changement de joueur 
         echiquier.switchJoueur();
         System.out.println(echiquier);
+        
+        System.out.println(echiquier.getMessage());
         
     }
 }
