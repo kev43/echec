@@ -16,9 +16,9 @@ import static tools.ChessPiecesFactory.newPieces;
 public class Jeu implements Game {
 
     private List<Pieces> listePieces;
-    Couleur couleur;
-    boolean possibleCastling = false;
-    boolean possibleCapture = false;
+    private Couleur couleur;
+    private boolean possibleCastling = false;
+    private boolean possibleCapture = false;
 
     /**
      * Constructeur d'un jeu
