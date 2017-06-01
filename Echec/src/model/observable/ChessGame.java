@@ -89,7 +89,9 @@ public class ChessGame extends Observable implements BoardGames{
 		return echiquier.getPieceColor(x, y);
 	}
 
-	
+	public List<Coord> getPossibleMoves(int xInit, int yInit) {
+            return echiquier.getPossibleMoves(xInit, yInit);
+        }
 
 	/* (non-Javadoc)
 	 * @see java.util.Observable#notifyObservers(java.lang.Object)
