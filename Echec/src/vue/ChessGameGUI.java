@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package vue;
 
 import controler.ChessGameControlers;
@@ -18,32 +17,37 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import model.Couleur;
+import model.PieceIHM;
+import tools.ChessImageProvider;
 
 /**
  *
  * @author david.vivier
  */
 public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionListener, Observer {
-    
+
     private ChessGameControlers chessGameControler;
-    
+
     private JLayeredPane layeredPane;
     private JPanel chessBoard;
     private JLabel chessPiece;
     private int xAdjustment;
     private int yAdjustment;
-    
+
     public ChessGameGUI(String title, ChessGameControlers chessGameControler, Dimension dim) {
         super(title);
         this.chessGameControler = chessGameControler;
-        
-         Dimension boardSize = new Dimension(600, 600);
+
+        Dimension boardSize = new Dimension(600, 600);
 
         //  Use a Layered Pane for this this application
         layeredPane = new JLayeredPane();
@@ -52,7 +56,7 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
         layeredPane.addMouseListener(this);
         layeredPane.addMouseMotionListener(this);
 
-  //Add a chess board to the Layered Pane 
+        //Add a chess board to the Layered Pane 
         chessBoard = new JPanel();
         layeredPane.add(chessBoard, JLayeredPane.DEFAULT_LAYER);
         chessBoard.setLayout(new GridLayout(8, 8));
@@ -71,6 +75,9 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
             }
         }
 
+        JLabel piece = new JLabel(new ImageIcon(ChessImageProvider.getImageFile("Tour", Couleur.BLANC)));
+        JPanel panel = (JPanel) chessBoard.getComponent(15);
+        panel.add(piece);
     }
 
     @Override
@@ -93,7 +100,8 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
         chessPiece = (JLabel) c;
         chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
         chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
-        layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);    }
+        layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);
+    }
 
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -123,7 +131,7 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
 
     @Override
     public void mouseExited(MouseEvent e) {
-        
+
     }
 
     @Override
@@ -136,12 +144,31 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        
+
     }
 
     @Override
     public void update(Observable o, Object arg) {
+        System.out.println(chessGameControler.getMessage() + "\n");
+
+        List<PieceIHM> piecesIHM = (List<PieceIHM>) arg;
+
+        String[][] damier = new String[8][8];
+
+        // création d'un tableau 2D avec les noms des pièces
+        for (PieceIHM pieceIHM : piecesIHM) {
+
+            Couleur color = pieceIHM.getCouleur();
+            
+            int x = pieceIHM.getX();
+            int y = pieceIHM.getY();
+            String fileName = ChessImageProvider.getImageFile(pieceIHM.getNamePiece(), color);
+            JLabel piece = new JLabel(new ImageIcon(fileName));
+            JPanel panel = (JPanel) chessBoard.getComponent(8*y+x);
+            panel.add(piece);
+
+        }
 
     }
-    
+
 }
