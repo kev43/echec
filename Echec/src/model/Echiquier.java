@@ -5,7 +5,6 @@
  */
 package model;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,32 +15,32 @@ import java.util.List;
 public class Echiquier implements BoardGames {
     private Jeu[] jeux ;
     private boolean isBlancCourant;
-    private Jeu jeuCourant;
+    
+    // indice 0 : BLANC
+    // indice 1 : NOIR
+    private int indiceJeuCourant;
     
     private String message;
     
     private boolean isCatchOk;
     private boolean isCastlingPossible;
     
-    Echiquier() {
+    public Echiquier() {
         jeux = new Jeu[2]; // tableau de taille 2
         jeux[0]= new Jeu(Couleur.BLANC);
         jeux[1]= new Jeu(Couleur.NOIR);
         
         // Blanc commence
         isBlancCourant = true;
-        jeuCourant = jeux[0];
-        
-        message = "Echiquier initialisé";
+        indiceJeuCourant = 0;
     }
     
     public boolean isMoveOk(int xInit,
                             int yInit,
                             int xFinal,
                             int yFinal) {
-        
         //s'il n'existe pas de piece du jeu courant aux coordonnées initiales
-        if (jeuCourant.getPieceName(xInit, yInit) == null){
+        if (jeux[indiceJeuCourant].getPieceName(xInit, yInit) == null){
             return false;
         }
         
@@ -56,7 +55,7 @@ public class Echiquier implements BoardGames {
         }
         
         // si la position finale ne correspond pas à un déplacement valide de la pièce
-        if (!jeuCourant.isMoveOk(xInit, yInit, xFinal, yFinal, isCatchOk, isCastlingPossible)) {
+        if (!jeux[indiceJeuCourant].isMoveOk(xInit, yInit, xFinal, yFinal, isCatchOk, isCastlingPossible)) {
             return false;
         }
         
@@ -64,12 +63,12 @@ public class Echiquier implements BoardGames {
         
         
         // s'il existe une pièce positionnée aux coordonnées finales
-        String finalPieceName = jeuCourant.getPieceName(xFinal, yFinal);
+        String finalPieceName = jeux[indiceJeuCourant].getPieceName(xFinal, yFinal);
         if (finalPieceName != null) {
-            Couleur couleur = jeuCourant.getPieceColor(xFinal, yFinal);
-            if ((couleur == jeuCourant.getCouleur())) {
+            Couleur couleur = jeux[indiceJeuCourant].getPieceColor(xFinal, yFinal);
+            if ((couleur == jeux[indiceJeuCourant].getCouleur())) {
                 // pièce de la mâme couleur
-                if (jeuCourant.getPieceName(xInit, yInit) == "Roi" && finalPieceName == "Tour") {
+                if (jeux[indiceJeuCourant].getPieceName(xInit, yInit).equals("Roi") && finalPieceName.equals("Tour")) {
                     // tentative de roque
                     // jeuCourant.setCastling();
                     
@@ -81,10 +80,10 @@ public class Echiquier implements BoardGames {
                 // pièce de l'adversaire
                 
                 // cas du pion
-                if (finalPieceName == "Pion") {
+                if (finalPieceName.equals("Pion")) {
                     
                 }
-                jeuCourant.capture(xFinal, yFinal);
+                jeux[indiceJeuCourant].capture(xFinal, yFinal);
             }
         }
         
@@ -96,7 +95,7 @@ public class Echiquier implements BoardGames {
     @Override
     public boolean move(int xInit, int yInit, int xFinal, int yFinal) {
         if (isMoveOk(xInit, yInit, xFinal, yFinal)) {
-            return move(xInit, yInit, xFinal, yFinal);
+            return jeux[indiceJeuCourant].move(xInit, yInit, xFinal, yFinal);
         }
         return false;
     }
@@ -116,7 +115,7 @@ public class Echiquier implements BoardGames {
 
     @Override
     public String getMessage() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return message;
     }
     
     private void setMessage(String message) {
@@ -125,26 +124,33 @@ public class Echiquier implements BoardGames {
 
     @Override
     public Couleur getColorCurrentPlayer() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Couleur couleur = null;
+        if (isBlancCourant) {
+            couleur = Couleur.BLANC;
+        } else {
+            couleur = Couleur.NOIR;
+        }
+        return couleur;
     }
 
     @Override
     public Couleur getPieceColor(int x, int y) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return jeux[indiceJeuCourant].getPieceColor(x, y);
     }
     
     public void switchJoueur() {
         if (isBlancCourant) {
             // à Noir de jouer
             isBlancCourant = false;
-            jeuCourant = jeux[0];
+            indiceJeuCourant = 1;
         } else {
             // à Blanc de jouer
             isBlancCourant = true;
-            jeuCourant = jeux[1];
+            indiceJeuCourant = 0;
         }
     }
     
+    @Override
     public String toString() {
         return "Jeu 1 :" + jeux[0] + " - Jeu 2 : " + jeux[1] + " - BlancCourant : " + isBlancCourant;
     }
