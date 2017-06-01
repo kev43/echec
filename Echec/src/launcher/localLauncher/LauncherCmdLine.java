@@ -21,9 +21,7 @@ public class LauncherCmdLine {
 		
 		model = new ChessGame();	
 		controler = new ChessGameControler(model);
-		
-		new ChessGameCmdLine(controler);	
-		
+                
 		vue = new ChessGameCmdLine(controler);
 		model.addObserver((Observer) vue);
 		vue.go();
