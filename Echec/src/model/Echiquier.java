@@ -62,7 +62,7 @@ public class Echiquier implements BoardGames {
         }
         
         // s'il existe une pièce intermédiaire sur la trajectoire
-        
+        checkPiecesIntermediaires(xInit, yInit, xFinal, yFinal);
         
         // s'il existe une pièce positionnée aux coordonnées finales
         String finalPieceName = jeux[indiceJeuCourant].getPieceName(xFinal, yFinal);
@@ -187,5 +187,32 @@ public class Echiquier implements BoardGames {
         
         System.out.println(echiquier.getMessage());
         
+    }
+
+    private boolean checkPiecesIntermediaires(int xInit, int yInit, int xFinal, int yFinal) {
+        boolean res = false;
+        String pieceName = jeux[indiceJeuCourant].getPieceName(xInit, yInit);
+        int i = 0, j = 0;
+        
+        switch (pieceName) {
+            case "Pion":
+                // pour le Pion, on considère uniquement le cas
+                //  où il bouge de deux cases, car dans les autres 
+                //  cas il n'y a pas de case intermédiaire.
+                Couleur couleur = getPieceColor(xInit, yInit);
+                if (couleur.equals(Couleur.BLANC) && xInit == 6
+                        ||
+                    couleur.equals(Couleur.NOIR)  && xInit == 1) {
+                    if (Math.abs(xFinal-xInit) == 2 ) {
+                        // on teste s'il y a une pièce devant le Pion
+                        if (couleur.equals(Couleur.BLANC) && true) {
+                            
+                        }
+                    }
+                }
+                break;
+        }
+        
+        return res;
     }
 }
