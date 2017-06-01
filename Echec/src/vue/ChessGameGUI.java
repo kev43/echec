@@ -17,9 +17,11 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -110,6 +112,11 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
             chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
             chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
             layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);
+            
+            //ajout pour le show possible move
+            showPossibleMoves(x,y);
+            
+            
         } else {
             System.out.println("Ce n'est pas le bon joueur");
         }
@@ -212,5 +219,36 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
         }
 
     }
+    
+    private void showPossibleMoves(int xInit , int yInit) {
+        
+        //appel de la méthode du controleur qui retourne la liste des coordonnée à modifier
+        List<Coord> listCoord = new LinkedList<>(chessGameControler.getPossibleMoves(xInit,yInit));
+        
+        for (Coord coord : listCoord) {
+            int x = (coord.x * (this.getWidth() / 8));
+            int y = (coord.y * (this.getWidth() / 8));
+            
+            Component c = chessBoard.getComponentAt(x, y);
+            
+            if (c instanceof JLabel) {
+                // il y a déjà un JLabel (pièce)
+                JPanel parent = (JPanel) c.getParent();
+                //parent.setBackground(Color.ORANGE);
+                parent.setBorder(BorderFactory.createLineBorder(Color.GREEN , 5));
+                
+            } else {
+                JPanel parent = (JPanel) (Container) c;
+                //parent.setBackground(Color.ORANGE);
+                parent.setBorder(BorderFactory.createLineBorder(Color.GREEN,5));
+            }
+            
+            //chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
+        }
+        
+        
+    }
+    
+    
 
 }
