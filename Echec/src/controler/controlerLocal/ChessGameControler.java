@@ -26,7 +26,11 @@ public class ChessGameControler extends AbstractChessGameControler {
 	 */
 	@Override
 	public boolean isPlayerOK(Coord initCoord) {
-		// ToDo
+            boolean res = false;
+            if (chessGame.getColorCurrentPlayer().equals(chessGame.getPieceColor(initCoord.x, initCoord.y))) {
+                res = true;
+            }
+            return res;
 	}
 	
 	/* (non-Javadoc)
