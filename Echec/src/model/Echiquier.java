@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -108,6 +109,20 @@ public class Echiquier implements BoardGames {
             list.addAll(jeu.getPiecesIHM());
         }
         return list;
+    }
+    
+    public List<Coord> getPossibleMoves(int xInit, int yInit) {
+        List<Coord> possibleMoves = new ArrayList<>();
+        
+        for (int y = 0; y < 8; y++) {
+            for (int x = 0; x < 8; x++) {
+                if (isMoveOk(xInit, yInit, x, y)) {
+                    possibleMoves.add(new Coord(x, y));
+                }
+            }
+        }
+        //System.out.println("Possible moves from ("+xInit+","+yInit+") : "+possibleMoves);
+        return possibleMoves;
     }
     
     @Override
