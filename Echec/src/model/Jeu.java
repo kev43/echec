@@ -96,13 +96,11 @@ public class Jeu implements Game {
      */
     @Override
     public boolean capture(int xCatch, int yCatch) {
-        /*for (Pieces p : listePieces) {
+        for (Pieces p : listePieces) {
             if (p.getX() == xCatch && p.getY() == yCatch) {
-                return true;
+                return p.capture();
             }
         }
-
-        return false;*/
         return false;
     }
 

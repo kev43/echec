@@ -67,12 +67,12 @@ public class Echiquier implements BoardGames {
         }
         
         // s'il existe une pièce positionnée aux coordonnées finales
-        String finalPieceName = jeux[indiceJeuCourant].getPieceName(xFinal, yFinal);
-        if (finalPieceName != null) {
+        if (isPieceHere(xFinal, yFinal)) {
             Couleur couleur = jeux[indiceJeuCourant].getPieceColor(xFinal, yFinal);
             if ((couleur == jeux[indiceJeuCourant].getCouleur())) {
                 // pièce de la mâme couleur
-                if (jeux[indiceJeuCourant].getPieceName(xInit, yInit).equals("Roi") && finalPieceName.equals("Tour")) {
+                if (jeux[indiceJeuCourant].getPieceName(xInit, yInit).equals("Roi") 
+                        && jeux[indiceJeuCourant].getPieceName(xFinal, yFinal).equals("Tour")) {
                     // tentative de roque
                     // jeuCourant.setCastling();
                     
@@ -85,10 +85,13 @@ public class Echiquier implements BoardGames {
                 // pièce de l'adversaire
                 
                 // cas du pion
-                if (finalPieceName.equals("Pion")) {
+                //if (.equals("Pion")) {
                     
-                }
-                jeux[indiceJeuCourant].capture(xFinal, yFinal);
+                //} else {
+                    // autres pièces
+                    
+                //}
+                //jeux[indiceJeuCourant].capture(xFinal, yFinal);
             }
         }
         
@@ -99,10 +102,19 @@ public class Echiquier implements BoardGames {
     
     @Override
     public boolean move(int xInit, int yInit, int xFinal, int yFinal) {
+        boolean res = false;
         if (isMoveOk(xInit, yInit, xFinal, yFinal)) {
-            return jeux[indiceJeuCourant].move(xInit, yInit, xFinal, yFinal);
+            boolean pieceOnFinal = isPieceHere(xFinal, yFinal);
+            res = jeux[indiceJeuCourant].move(xInit, yInit, xFinal, yFinal);
+            
+            // s'il y a une pièce sur la case d'arrivée
+            //  (on sait que c'est une pièce adverse car isMoveOk() a renvoyé true
+            if (res == true && pieceOnFinal) {
+                // on la capture
+                res = jeux[(indiceJeuCourant+1)%2].capture(xFinal, yFinal);
+            }
         }
-        return false;
+        return res;
     }
     
     public List<PieceIHMs> getPiecesIHM() {
