@@ -18,12 +18,12 @@ public class Pion extends AbstractPiece {
     }
     
     @Override
-    public boolean isMoveOk(int xFinal, int yFinal, boolean isCatchOk, boolean isCastlingPossible) {
+    public boolean isMoveOk(int xFinal, int yFinal, boolean isCatching, boolean isCastlingPossible) {
         
         
         if (couleur == Couleur.BLANC) {
             // déplacement du pion BLANC : "vers le haut" = y décroissant
-            if (isCatchOk) {
+            if (isCatching) {
                 // prise du pion
                 if (yFinal == y-1) {
                     // ligne au-dessus
@@ -58,7 +58,7 @@ public class Pion extends AbstractPiece {
             }
         } else if (couleur == Couleur.NOIR) {
             // déplacement du pion NOIR : "vers le bas" = y croissant
-            if (isCatchOk) {
+            if (isCatching) {
                 // prise du pion
                 if (yFinal == y+1) {
                     // ligne au-dessous

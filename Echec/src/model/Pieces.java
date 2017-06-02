@@ -23,7 +23,7 @@ public interface Pieces {
     
     boolean isMoveOk(int xFinal,
                      int yFinal,
-                     boolean isCatchOk,
+                     boolean isCatching,
                      boolean isCastlingPossible);
     
     boolean move(int xFinal, int yFinal);

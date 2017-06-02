@@ -52,16 +52,16 @@ public class Jeu implements Game {
      * @param yInit position de départ Y
      * @param xFinal position d'arrivée X
      * @param yFinal position d'arrivée Y
-     * @param isCatchOk si capture possible
+     * @param isCatching si le mouvement correspond à une capture
      * @param isCastlingPossible si roque possible
      * @return boolean
      */
     @Override
-    public boolean isMoveOk(int xInit, int yInit, int xFinal, int yFinal, boolean isCatchOk, boolean isCastlingPossible) {
+    public boolean isMoveOk(int xInit, int yInit, int xFinal, int yFinal, boolean isCatching, boolean isCastlingPossible) {
         boolean res = false;
          for (Pieces p : listePieces) {
             if (p.getX() == xInit && p.getY() == yInit) {
-                res = p.isMoveOk(xFinal, yFinal, isCatchOk, isCastlingPossible);
+                res = p.isMoveOk(xFinal, yFinal, isCatching, isCastlingPossible);
             }
         }
         return res;

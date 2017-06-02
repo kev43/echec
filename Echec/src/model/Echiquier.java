@@ -41,6 +41,7 @@ public class Echiquier implements BoardGames {
                             int yInit,
                             int xFinal,
                             int yFinal) {
+        
         //s'il n'existe pas de piece du jeu courant aux coordonnées initiales
         if (jeux[indiceJeuCourant].getPieceName(xInit, yInit) == null){
             return false;
@@ -56,8 +57,15 @@ public class Echiquier implements BoardGames {
             return false;
         }
         
+        boolean isCatching = false;
+        Couleur couleurCourante = jeux[indiceJeuCourant].getCouleur();
+        Couleur couleurFinale = getPieceColor(xFinal, yFinal);
+        if (couleurFinale != null && !couleurFinale.equals(couleurCourante)) {
+            isCatching = true;
+        }
+        
         // si la position finale ne correspond pas à un déplacement valide de la pièce
-        if (!jeux[indiceJeuCourant].isMoveOk(xInit, yInit, xFinal, yFinal, isCatchOk, isCastlingPossible)) {
+        if (!jeux[indiceJeuCourant].isMoveOk(xInit, yInit, xFinal, yFinal, isCatching, isCastlingPossible)) {
             return false;
         }
         
