@@ -41,7 +41,7 @@ public class Echiquier implements BoardGames {
                             int yInit,
                             int xFinal,
                             int yFinal) {
-        return isMoveOk(xInit, yInit, xFinal, yFinal, indiceJeuCourant);
+        return isMoveOk(xInit, yInit, xFinal, yFinal, indiceJeuCourant, false);
     }
     
     /**
@@ -61,7 +61,8 @@ public class Echiquier implements BoardGames {
                             int yInit,
                             int xFinal,
                             int yFinal,
-                            int indiceJeuActif) {
+                            int indiceJeuActif,
+                            boolean isCatching) {
         
         //s'il n'existe pas de piece du jeu courant aux coordonnées initiales
         if (jeux[indiceJeuActif].getPieceName(xInit, yInit) == null){
@@ -78,7 +79,7 @@ public class Echiquier implements BoardGames {
             return false;
         }
         
-        boolean isCatching = false;
+        //boolean isCatching = false;
         Couleur couleurCourante = jeux[indiceJeuActif].getCouleur();
         Couleur couleurFinale = getPieceColor(xFinal, yFinal);
         // est-ce que le coup correspond à une capture de pièce
@@ -377,7 +378,7 @@ public class Echiquier implements BoardGames {
                     x = xInit+1;
                     y = yInit-1;
                     while (x < xFinal && y > yFinal) {
-                        System.out.println("x="+x+" y="+y);
+                        //System.out.println("x="+x+" y="+y);
                         if (isPieceHere(x, y)) {
                             res = true;
                             break;
@@ -390,7 +391,7 @@ public class Echiquier implements BoardGames {
                     x = xInit+1;
                     y = yInit+1;
                     while (x < xFinal && y < yFinal) {
-                        System.out.println("x="+x+" y="+y);
+                        //System.out.println("x="+x+" y="+y);
                         if (isPieceHere(x, y)) {
                             res = true;
                             break;
@@ -403,7 +404,7 @@ public class Echiquier implements BoardGames {
                     x = xInit-1;
                     y = yInit+1;
                     while (x > xFinal && y < yFinal) {
-                        System.out.println("x="+x+" y="+y);
+                        //System.out.println("x="+x+" y="+y);
                         if (isPieceHere(x, y)) {
                             res = true;
                             break;
@@ -416,7 +417,7 @@ public class Echiquier implements BoardGames {
                     x = xInit-1;
                     y = yInit-1;
                     while (x > xFinal && y > yFinal) {
-                        System.out.println("x="+x+" y="+y);
+                        //System.out.println("x="+x+" y="+y);
                         if (isPieceHere(x, y)) {
                             res = true;
                             break;
@@ -439,9 +440,9 @@ public class Echiquier implements BoardGames {
         
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                if (isMoveOk(x, y, xCible, yCible, (indiceJeuCourant+1)%2)) {
+                if (isMoveOk(x, y, xCible, yCible, (indiceJeuCourant+1)%2, true)) {
                     res = true;
-                    System.out.println("Pièce attaquée : ("+xCible+","+yCible+")");
+                    //System.out.println("Case menacée : ("+xCible+","+yCible+")");
                 }
             }
         }

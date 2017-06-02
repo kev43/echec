@@ -95,7 +95,7 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        
     }
 
     /**
@@ -129,7 +129,7 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
             
             //ajout pour le show possible move
             showPossibleMoves(x,y);
-            
+            //showCasesMenacees();
             
             
         } else {
@@ -258,7 +258,7 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
             panel.add(piece);
         }
         //affichage des cases menacees
-        showCasesMenaces();
+        //showCasesMenaces();
     }
     
     /**
@@ -276,7 +276,7 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
             int y = (coord.y * (this.chessBoard.getWidth() / 8));
             
             Component c = chessBoard.getComponentAt(x, y);
-            
+            //System.out.println(c);
             if (c instanceof JLabel) {
                 // il y a déjà un JLabel (pièce)
                 JPanel parent = (JPanel) c.getParent();
@@ -295,19 +295,19 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
         }
     }
         
-        private void showCasesMenaces() {
+        private void showCasesMenacees() {
         
         //appel de la méthode du controleur qui retourne la liste des coordonnée à modifier
         List<Coord> listCoord = new ArrayList<>(chessGameControler.getCasesMenacees());
-        System.out.println("Liste coord" + listCoord.toString());
+        //System.out.println("Liste coord" + listCoord.toString());
         
         for (Coord coord : listCoord) {
             int x = (coord.x * (this.chessBoard.getWidth() / 8));
             int y = (coord.y * (this.chessBoard.getWidth() / 8));
-            System.out.println("("+x+","+y+")");
+            //System.out.println("("+x+","+y+")");
             Component c = chessBoard.getComponentAt(x, y);
             
-            System.out.println(c.toString());
+            //System.out.println(c.toString());
             
             if (c instanceof JLabel) {
                 // il y a déjà un JLabel (pièce)
