@@ -37,6 +37,19 @@ public class Echiquier implements BoardGames {
         indiceJeuCourant = 0;
     }
     
+    /**
+     * Indique si un coup est autorisé ou non.
+     * Ne modifie pas l'échiquier.
+     * 
+     * /!\ Le roque n'est pas implémenté
+     * 
+     * @param xInit coordonnée x départ
+     * @param yInit coordonnée y départ
+     * @param xFinal coordonnée x arrivée
+     * @param yFinal coordonnée y arrivée
+     * @return true si le coup est autorisé,
+     *         false si le coup est illégal
+     */
     public boolean isMoveOk(int xInit,
                             int yInit,
                             int xFinal,
@@ -60,6 +73,7 @@ public class Echiquier implements BoardGames {
         boolean isCatching = false;
         Couleur couleurCourante = jeux[indiceJeuCourant].getCouleur();
         Couleur couleurFinale = getPieceColor(xFinal, yFinal);
+        // est-ce que le coup correspond à une capture de pièce
         if (couleurFinale != null && !couleurFinale.equals(couleurCourante)) {
             isCatching = true;
         }
@@ -77,7 +91,7 @@ public class Echiquier implements BoardGames {
         // s'il existe une pièce positionnée aux coordonnées finales
         if (isPieceHere(xFinal, yFinal)) {
             Couleur couleur = jeux[indiceJeuCourant].getPieceColor(xFinal, yFinal);
-            if ((couleur == jeux[indiceJeuCourant].getCouleur())) {
+            if ((couleur == couleurCourante)) {
                 // pièce de la mâme couleur
                 if (jeux[indiceJeuCourant].getPieceName(xInit, yInit).equals("Roi") 
                         && jeux[indiceJeuCourant].getPieceName(xFinal, yFinal).equals("Tour")) {
@@ -92,22 +106,27 @@ public class Echiquier implements BoardGames {
             } else {
                 // pièce de l'adversaire
                 
-                // cas du pion
-                //if (.equals("Pion")) {
-                    
-                //} else {
-                    // autres pièces
-                    
-                //}
-                //jeux[indiceJeuCourant].capture(xFinal, yFinal);
             }
         }
-        
         
         this.setMessage("OK : déplacement simple");
         return true;
     }
     
+    /**
+     * Effectue un déplacement de pièce d'une case de départ à une case d'arrivée.
+     * 1) Vérification avec isMoveOk() si le coup est autorisé
+     * 2) Effectue le déplacement
+     * 3) Le cas échéant, capture la pièce de la case d'arrivée
+     * 
+     * @param xInit coordonnée x départ
+     * @param yInit coordonnée y départ
+     * @param xFinal coordonnée x arrivée
+     * @param yFinal coordonnée y arrivée
+     * @return true si tout s'est bien passé
+     *         false si le mouvement n'est pas autorisé
+     *               ou si la capture n'a pas fonctionné
+     */
     @Override
     public boolean move(int xInit, int yInit, int xFinal, int yFinal) {
         boolean res = false;
@@ -125,6 +144,11 @@ public class Echiquier implements BoardGames {
         return res;
     }
     
+    /**
+     * @return une version réduite de la liste des pièces en cours 
+     * ne donnant que des accès en lecture sur des PieceIHMs
+     * (type piece + couleur + coordonnées)
+     */
     public List<PieceIHMs> getPiecesIHM() {
         List list = new LinkedList();
         for (Jeu jeu : jeux) {
@@ -133,6 +157,15 @@ public class Echiquier implements BoardGames {
         return list;
     }
     
+    /**
+     * Retourne la liste des coordonnées que la pièce située sur
+     *  la case (xInit, yInit) a le droit d'atteindre. Cela inclut 
+     *  les captures de pièces.
+     * 
+     * @param xInit
+     * @param yInit
+     * @return liste des coordonnées des cases possibles
+     */
     public List<Coord> getPossibleMoves(int xInit, int yInit) {
         List<Coord> possibleMoves = new ArrayList<>();
         
@@ -143,7 +176,7 @@ public class Echiquier implements BoardGames {
                 }
             }
         }
-        //System.out.println("Possible moves from ("+xInit+","+yInit+") : "+possibleMoves);
+        
         return possibleMoves;
     }
     
@@ -160,7 +193,12 @@ public class Echiquier implements BoardGames {
     private void setMessage(String message) {
         this.message = message;
     }
-
+    
+    /**
+     * Retourne la Couleur du joueur qui a le trait.
+     * 
+     * @return Couleur
+     */
     @Override
     public Couleur getColorCurrentPlayer() {
         Couleur couleur = null;
@@ -172,6 +210,12 @@ public class Echiquier implements BoardGames {
         return couleur;
     }
 
+    /**
+     * Retourne la Couleur de la pièce aux coordonnées (x,y)
+     * @param x
+     * @param y
+     * @return Couleur la couleur de la pièce
+     */
     @Override
     public Couleur getPieceColor(int x, int y) {
         Couleur c = null ;
@@ -182,6 +226,13 @@ public class Echiquier implements BoardGames {
         return c;
     }
     
+    /**
+     * Indique s'il y a une pièce sur la case (x,y)
+     * 
+     * @param x
+     * @param y
+     * @return boolean true s'il y a une pièce, false si la case est vide
+     */
     public boolean isPieceHere(int x, int y) {
         boolean res = false;
         res = jeux[0].isPieceHere(x, y);
@@ -191,6 +242,11 @@ public class Echiquier implements BoardGames {
         return res;
     }
     
+    /**
+     * Permute le joueur qui a le trait.
+     * Si Blanc a le trait, Noir a alors le trait et vice-versa.
+     * 
+     */
     public void switchJoueur() {
         if (isBlancCourant) {
             // à Noir de jouer
@@ -229,18 +285,17 @@ public class Echiquier implements BoardGames {
      * Vérifie s'il y a des pièces entre la case de départ et la case d'arrivée
      * Ne se soucie pas si la case d'arrivée est occupée ou non
      * 
-     * @param xInit
-     * @param yInit
-     * @param xFinal
-     * @param yFinal
-     * @return 
+     * @param xInit coordonnée x départ
+     * @param yInit coordonnée y départ
+     * @param xFinal coordonnées x arrivée
+     * @param yFinal coordonnées y arrivée
+     * @return boolean true s'il y a des pièces obstacle, false s'il n'y en a pas
      */
     private boolean existPiecesIntermediaires(int xInit, int yInit, int xFinal, int yFinal) {
-        //System.out.println("debut checkPiecesIntermediaires : ("+xInit+","+yInit+") -> ("+xFinal+","+yFinal+")");
         boolean res = false;
         String pieceName = jeux[indiceJeuCourant].getPieceName(xInit, yInit);
         int x = 0, y = 0;
-        // on n'apple Cavalier, ni le roi
+        // on n'a pas besoin de vérifier pour Cavalier ni pour Roi
         switch (pieceName) {
             case "Pion":
                 // pour le Pion, on considère uniquement le cas
@@ -303,11 +358,12 @@ public class Echiquier implements BoardGames {
                 }
                 
                 if (pieceName == "Tour") {
-                    // si c'est une Reine on continue la vérification avec le Fou
+                    // si c'est une Reine on continue la vérification avec les mouvements de Fou
                     break;
                 }
             case "Fou":
-                System.out.println("("+xInit+","+yInit+") -> ("+xFinal+","+yFinal+")");
+                
+                //System.out.println("("+xInit+","+yInit+") -> ("+xFinal+","+yFinal+")");
                 if (xInit < xFinal && yFinal < yInit) {
                     // déplacement Nord-Est
                     x = xInit+1;
