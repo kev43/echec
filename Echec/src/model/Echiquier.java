@@ -62,7 +62,9 @@ public class Echiquier implements BoardGames {
         }
         
         // s'il existe une pièce intermédiaire sur la trajectoire
-        existPiecesIntermediaires(xInit, yInit, xFinal, yFinal);
+        if (existPiecesIntermediaires(xInit, yInit, xFinal, yFinal)) {
+            return false;
+        }
         
         // s'il existe une pièce positionnée aux coordonnées finales
         String finalPieceName = jeux[indiceJeuCourant].getPieceName(xFinal, yFinal);
@@ -153,15 +155,19 @@ public class Echiquier implements BoardGames {
     @Override
     public Couleur getPieceColor(int x, int y) {
         Couleur c = null ;
-        if((c=jeux[0].getPieceColor(x, y))==null);
-        else c= jeux[1].getPieceColor(x, y);
+        c = jeux[0].getPieceColor(x, y);
+        if (c == null) {
+            c = jeux[1].getPieceColor(x, y);
+        }
         return c;
     }
     
     public boolean isPieceHere(int x, int y) {
         boolean res = false;
-        if((res=jeux[0].isPieceHere(x, y))==false);
-        else res= jeux[1].isPieceHere(x, y);
+        res = jeux[0].isPieceHere(x, y);
+        if (res == false) {
+            res = jeux[1].isPieceHere(x, y);
+        }
         return res;
     }
     
@@ -210,10 +216,10 @@ public class Echiquier implements BoardGames {
      * @return 
      */
     private boolean existPiecesIntermediaires(int xInit, int yInit, int xFinal, int yFinal) {
+        //System.out.println("debut checkPiecesIntermediaires : ("+xInit+","+yInit+") -> ("+xFinal+","+yFinal+")");
         boolean res = false;
         String pieceName = jeux[indiceJeuCourant].getPieceName(xInit, yInit);
         int x = 0, y = 0;
-        
         // on n'apple Cavalier, ni le roi
         switch (pieceName) {
             case "Pion":
@@ -234,31 +240,53 @@ public class Echiquier implements BoardGames {
                 break;
             case "Reine": // Reine a les déplacements de Tour + Fou
             case "Tour":
-                if (yInit == yFinal) {
-                    // déplacement horizontal
-                    int increment = (xInit < xFinal) ? +1 : -1;
-                    for (x = xInit+increment; x < xFinal-increment; x += increment) {
-                        if (isPieceHere(yInit, x)) {
+                if (xInit == xFinal && yFinal < yInit) {
+                    // déplacement vers le Nord
+                    for (y = yInit-1; y > yFinal; y--) {
+                        if (isPieceHere(xInit, y)) {
                             res = true;
                             break;
                         }
                     }
-                } else if (xInit == xFinal) {
-                    // déplacement vertical
-                    int increment = (yInit < yFinal) ? +1 : -1;
-                    for (y = yInit+increment; y < yFinal-increment; y += increment) {
+                    
+                } else if (xInit == xFinal && yFinal > yInit) {
+                    // déplacement vers le Sud
+                    for (y = yInit+1; y < yFinal; y++) {
+                        if (isPieceHere(xInit, y)) {
+                            res = true;
+                            break;
+                        }
+                    }
+                    
+                } else if (yInit == yFinal && xFinal < xInit) {
+                    // déplacement vers l'Ouest
+                    for (x = xInit-1; x > xFinal; x--) {
+                        if (isPieceHere(x, yInit)) {
+                            res = true;
+                            break;
+                        }
+                    }
+                } else if (yInit == yFinal && xFinal > xInit) {
+                    // déplacement vers l'Est
+                    for (x = xInit+1; x < xFinal; x++) {
+                        
                         if (isPieceHere(x, yInit)) {
                             res = true;
                             break;
                         }
                     }
                 }
-                break;
+                
+                if (pieceName == "Tour") {
+                    // si c'est une Reine on continue la vérification avec le Fou
+                    break;
+                }
             case "Fou":
+                
+                
                 
                 break;
         }
-        
         return res;
     }
 }
