@@ -49,11 +49,12 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
     private Coord coordInit;
 
     /**
-     * Constrcuteur de la classe ChessGameGUI. 
-     * Méthode crée les composants de l'interface graphique et les affichent.
+     * Constrcuteur de la classe ChessGameGUI. Méthode crée les composants de
+     * l'interface graphique et les affichent.
+     *
      * @param title
      * @param chessGameControler
-     * @param dim 
+     * @param dim
      */
     public ChessGameGUI(String title, ChessGameControlers chessGameControler, Dimension dim) {
         super(title);
@@ -91,16 +92,20 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
 
     /**
      * Méthode mouseClicked non utilisée.
-     * @param e 
+     *
+     * @param e
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+
     }
 
     /**
-     * Vérifie que le joueur actuel a le droit de déplacer la pièce choisie , ajoute la pièce à un DRAG_LAYER et montre les différents déplacements possibles.
-     * @param e 
+     * Vérifie que le joueur actuel a le droit de déplacer la pièce choisie ,
+     * ajoute la pièce à un DRAG_LAYER et montre les différents déplacements
+     * possibles.
+     *
+     * @param e
      */
     @Override
     public void mousePressed(MouseEvent e) {
@@ -112,7 +117,6 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
         chessPiece = null;
         if (chessGameControler.isPlayerOK(coordInit)) {
 
-            
             Component c = chessBoard.findComponentAt(e.getX(), e.getY());
 
             if (c instanceof JPanel) {
@@ -126,20 +130,21 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
             chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
             chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
             layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);
-            
+
             //ajout pour le show possible move
-            showPossibleMoves(x,y);
+            showPossibleMoves(x, y);
             //showCasesMenacees();
-            
-            
+
         } else {
             System.out.println("Ce n'est pas le bon joueur");
         }
     }
 
     /**
-     * Pose la pièce déplacée sur la case choisie si le déplacement est autorisé, sinon la pièce est remise à sa position initiale
-     * @param e 
+     * Pose la pièce déplacée sur la case choisie si le déplacement est
+     * autorisé, sinon la pièce est remise à sa position initiale
+     *
+     * @param e
      */
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -179,7 +184,8 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
 
     /**
      * Méthode mouseEntered non utilisée
-     * @param e 
+     *
+     * @param e
      */
     @Override
     public void mouseEntered(MouseEvent e) {
@@ -188,7 +194,8 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
 
     /**
      * Méthode mouseExited non utilisée
-     * @param e 
+     *
+     * @param e
      */
     @Override
     public void mouseExited(MouseEvent e) {
@@ -197,7 +204,8 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
 
     /**
      * Déplace la pièce cliquée en fonction de la position de la souris
-     * @param e 
+     *
+     * @param e
      */
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -209,21 +217,24 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
 
     /**
      * Méthode mouseMoved non utilisée
-     * @param e 
+     *
+     * @param e
      */
     @Override
     public void mouseMoved(MouseEvent e) {
-        
+
         /*System.out.println("("+e.getX()+","+e.getY()+")");
-        int x = e.getX() / (this.chessBoard.getWidth() / 8);
-        int y = e.getY() / (this.chessBoard.getHeight() / 8);
-        System.out.println("("+x+","+y+")");*/
+         int x = e.getX() / (this.chessBoard.getWidth() / 8);
+         int y = e.getY() / (this.chessBoard.getHeight() / 8);
+         System.out.println("("+x+","+y+")");*/
     }
 
     /**
-     * Raffraichit l'affichage de l'interface graphique  en fonction des modifications appliquées au modèle après un déplacement.
+     * Raffraichit l'affichage de l'interface graphique en fonction des
+     * modifications appliquées au modèle après un déplacement.
+     *
      * @param o
-     * @param arg 
+     * @param arg
      */
     @Override
     public void update(Observable o, Object arg) {
@@ -260,55 +271,59 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
         //affichage des cases menacees
         //showCasesMenaces();
     }
-    
+
     /**
-     * Affiche sur l'interface les différents movements possibles pour la pièce sélectionnée
+     * Affiche sur l'interface les différents movements possibles pour la pièce
+     * sélectionnée
+     *
      * @param xInit
-     * @param yInit 
+     * @param yInit
      */
-    private void showPossibleMoves(int xInit , int yInit) {
-        
+    private void showPossibleMoves(int xInit, int yInit) {
+
         //appel de la méthode du controleur qui retourne la liste des coordonnée à modifier
-        List<Coord> listCoord = new LinkedList<>(chessGameControler.getPossibleMoves(xInit,yInit));
-        
+        List<Coord> listCoord = new LinkedList<>(chessGameControler.getPossibleMoves(xInit, yInit));
+
         for (Coord coord : listCoord) {
             int x = (coord.x * (this.chessBoard.getWidth() / 8));
             int y = (coord.y * (this.chessBoard.getWidth() / 8));
-            
+
             Component c = chessBoard.getComponentAt(x, y);
             //System.out.println(c);
             if (c instanceof JLabel) {
                 // il y a déjà un JLabel (pièce)
                 JPanel parent = (JPanel) c.getParent();
                 //parent.setBackground(Color.ORANGE);
-                parent.setBorder(BorderFactory.createLineBorder(Color.GREEN , 5));
-                
+                parent.setBorder(BorderFactory.createLineBorder(Color.GREEN, 5));
+
             } else {
                 JPanel parent = (JPanel) (Container) c;
                 //parent.setBackground(Color.ORANGE);
-                parent.setBorder(BorderFactory.createLineBorder(Color.GREEN,5));
+                parent.setBorder(BorderFactory.createLineBorder(Color.GREEN, 5));
             }
-            
+
             //chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
-            
-            
         }
     }
-        
-        private void showCasesMenacees() {
-        
+
+    /**
+     * Change le background des cases qui sont attaquables par
+     * les pièces adverses du joueur courant
+     * 
+     */
+    private void showCasesMenacees() {
+
         //appel de la méthode du controleur qui retourne la liste des coordonnée à modifier
         List<Coord> listCoord = new ArrayList<>(chessGameControler.getCasesMenacees());
         //System.out.println("Liste coord" + listCoord.toString());
-        
+
         for (Coord coord : listCoord) {
             int x = (coord.x * (this.chessBoard.getWidth() / 8));
             int y = (coord.y * (this.chessBoard.getWidth() / 8));
             //System.out.println("("+x+","+y+")");
             Component c = chessBoard.getComponentAt(x, y);
-            
+
             //System.out.println(c.toString());
-            
             if (c instanceof JLabel) {
                 // il y a déjà un JLabel (pièce)
                 JPanel parent = (JPanel) c.getParent();
@@ -319,15 +334,10 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
                 parent.setBackground(Color.ORANGE);
                 //parent.setBorder(BorderFactory.createLineBorder(Color.ORANGE,5));
             }
-            
+
             //chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
-            
-            
         }
-        
-        
+
     }
-    
-    
 
 }
