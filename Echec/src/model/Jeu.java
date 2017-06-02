@@ -17,8 +17,11 @@ public class Jeu implements Game {
 
     private List<Pieces> listePieces;
     private Couleur couleur;
-    private boolean possibleCastling = false;
+    private boolean possibleCastling = true; // false si le joueur a déja roqué
     private boolean possibleCapture = false;
+    private boolean tourPetitMoved = false; //petit roque
+    private boolean tourGrandMoved = false ; //grand roque
+    private boolean roiMoved = false ;
 
     /**
      * Constructeur d'un jeu
@@ -82,6 +85,15 @@ public class Jeu implements Game {
             if (p.getX() == xInit && p.getY() == yInit) {
                 p.move(xFinal, yFinal);
                 res = true;
+                
+                //Tests pour le roque du roi
+                if (p.getName().equals("Roi") && !this.roiMoved) {
+                    this.roiMoved = true;
+                }else if(p.getName().equals("Tour") && !this.tourGrandMoved && p.getX()== 0) {
+                    this.tourGrandMoved = true;
+                }else if(p.getName().equals("Tour") && !this.tourPetitMoved && p.getX()== 7) {
+                    this.tourPetitMoved = true ;
+                }
             }
         }
 

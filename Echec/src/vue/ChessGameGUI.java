@@ -130,6 +130,7 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
             showPossibleMoves(x,y);
             
             
+            
         } else {
             System.out.println("Ce n'est pas le bon joueur");
         }
@@ -255,7 +256,8 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
 
             panel.add(piece);
         }
-
+        //affichage des cases menacees
+        showCasesMenaces();
     }
     
     /**
@@ -287,6 +289,37 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
             }
             
             //chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
+            
+            //getCasesMenaces List<Coord>
+        }
+    }
+        
+        private void showCasesMenaces() {
+        
+        //appel de la méthode du controleur qui retourne la liste des coordonnée à modifier
+        List<Coord> listCoord = new LinkedList<>(chessGameControler.getCasesMenaces());
+        
+        for (Coord coord : listCoord) {
+            int x = (coord.x * (this.chessBoard.getWidth() / 8));
+            int y = (coord.y * (this.chessBoard.getWidth() / 8));
+            
+            Component c = chessBoard.getComponentAt(x, y);
+            
+            if (c instanceof JLabel) {
+                // il y a déjà un JLabel (pièce)
+                JPanel parent = (JPanel) c.getParent();
+                parent.setBackground(Color.ORANGE);
+                //parent.setBorder(BorderFactory.createLineBorder(Color.GREEN , 5));
+                
+            } else {
+                JPanel parent = (JPanel) (Container) c;
+                parent.setBackground(Color.ORANGE);
+                //parent.setBorder(BorderFactory.createLineBorder(Color.GREEN,5));
+            }
+            
+            //chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
+            
+            
         }
         
         
