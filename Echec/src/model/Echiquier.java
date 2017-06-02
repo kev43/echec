@@ -227,13 +227,18 @@ public class Echiquier implements BoardGames {
                 //  où il bouge de deux cases, car dans les autres 
                 //  cas il n'y a pas de case intermédiaire.
                 Couleur couleur = getPieceColor(xInit, yInit);
-                if (couleur.equals(Couleur.BLANC) && xInit == 6
+                if (couleur.equals(Couleur.BLANC) && yInit == 6
                         ||
-                    couleur.equals(Couleur.NOIR)  && xInit == 1) {
-                    if (Math.abs(xFinal-xInit) == 2 ) {
+                    couleur.equals(Couleur.NOIR)  && yInit == 1) {
+                    if (Math.abs(yFinal-yInit) == 2 ) {
+                        // s'il veut se déplacer de 2 cases
                         // on teste s'il y a une pièce devant le Pion
-                        if (couleur.equals(Couleur.BLANC) && true) {
-                            
+                        if (couleur.equals(Couleur.NOIR) && isPieceHere(xInit, 2)) {
+                            res = true;
+                            break;
+                        } else if (couleur.equals(Couleur.BLANC) && isPieceHere(xInit, 5)) {
+                            res = true;
+                            break;
                         }
                     }
                 }
