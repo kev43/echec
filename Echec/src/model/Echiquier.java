@@ -62,7 +62,7 @@ public class Echiquier implements BoardGames {
         }
         
         // s'il existe une pièce intermédiaire sur la trajectoire
-        checkPiecesIntermediaires(xInit, yInit, xFinal, yFinal);
+        existPiecesIntermediaires(xInit, yInit, xFinal, yFinal);
         
         // s'il existe une pièce positionnée aux coordonnées finales
         String finalPieceName = jeux[indiceJeuCourant].getPieceName(xFinal, yFinal);
@@ -188,12 +188,23 @@ public class Echiquier implements BoardGames {
         System.out.println(echiquier.getMessage());
         
     }
-
-    private boolean checkPiecesIntermediaires(int xInit, int yInit, int xFinal, int yFinal) {
+    
+    /**
+     * Vérifie s'il y a des pièces entre la case de départ et la case d'arrivée
+     * Ne se soucie pas si la case d'arrivée est occupée ou non
+     * 
+     * @param xInit
+     * @param yInit
+     * @param xFinal
+     * @param yFinal
+     * @return 
+     */
+    private boolean existPiecesIntermediaires(int xInit, int yInit, int xFinal, int yFinal) {
         boolean res = false;
         String pieceName = jeux[indiceJeuCourant].getPieceName(xInit, yInit);
-        int i = 0, j = 0;
+        int x = 0, y = 0;
         
+        // on n'apple Cavalier, ni le roi
         switch (pieceName) {
             case "Pion":
                 // pour le Pion, on considère uniquement le cas
@@ -210,6 +221,31 @@ public class Echiquier implements BoardGames {
                         }
                     }
                 }
+                break;
+            case "Reine": // Reine a les déplacements de Tour + Fou
+            case "Tour":
+                if (yInit == yFinal) {
+                    // déplacement horizontal
+                    int increment = (xInit < xFinal) ? +1 : -1;
+                    for (x = xInit+increment; x < xFinal-increment; x += increment) {
+                        if (isPieceHere(yInit, x)) {
+                            res = true;
+                            break;
+                        }
+                    }
+                } else if (xInit == xFinal) {
+                    // déplacement vertical
+                    int increment = (yInit < yFinal) ? +1 : -1;
+                    for (y = yInit+increment; y < yFinal-increment; y += increment) {
+                        if (isPieceHere(x, yInit)) {
+                            res = true;
+                            break;
+                        }
+                    }
+                }
+                break;
+            case "Fou":
+                
                 break;
         }
         
