@@ -91,8 +91,8 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
     @Override
     public void mousePressed(MouseEvent e) {
 
-        int x = e.getX() / (this.getWidth() / 8);
-        int y = e.getY() / (this.getHeight() / 8);
+        int x = e.getX() / (this.chessBoard.getWidth() / 8);
+        int y = e.getY() / (this.chessBoard.getHeight() / 8);
         coordInit = new Coord(x, y);
         //parentInit = c.getParent();
         chessPiece = null;
@@ -131,8 +131,8 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
         chessPiece.setVisible(false);
         Component c = chessBoard.findComponentAt(e.getX(), e.getY());
 
-        int x = e.getX() / (this.getWidth() / 8);
-        int y = e.getY() / (this.getHeight() / 8);
+        int x = e.getX() / (this.chessBoard.getWidth() / 8);
+        int y = e.getY() / (this.chessBoard.getHeight() / 8);
         //System.out.println("MouseReleased() - (" + x + "," + y + ")");
         Coord coordFinal = new Coord(x, y);
 
@@ -178,11 +178,11 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        /*
-         int x = e.getX()/(this.getWidth()/8);
-         int y = e.getY()/(this.getHeight()/8);
-         System.out.println("MouseMoved() - ("+x+","+y+")");
-         */
+        
+        /*System.out.println("("+e.getX()+","+e.getY()+")");
+        int x = e.getX() / (this.chessBoard.getWidth() / 8);
+        int y = e.getY() / (this.chessBoard.getHeight() / 8);
+        System.out.println("("+x+","+y+")");*/
     }
 
     @Override
@@ -226,8 +226,8 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
         List<Coord> listCoord = new LinkedList<>(chessGameControler.getPossibleMoves(xInit,yInit));
         
         for (Coord coord : listCoord) {
-            int x = (coord.x * (this.getWidth() / 8));
-            int y = (coord.y * (this.getWidth() / 8));
+            int x = (coord.x * (this.chessBoard.getWidth() / 8));
+            int y = (coord.y * (this.chessBoard.getWidth() / 8));
             
             Component c = chessBoard.getComponentAt(x, y);
             
