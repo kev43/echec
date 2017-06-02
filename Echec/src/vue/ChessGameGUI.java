@@ -58,7 +58,7 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
         super(title);
         this.chessGameControler = chessGameControler;
 
-        Dimension boardSize = new Dimension(600, 600);
+        Dimension boardSize = new Dimension(800, 800);
 
         //  Use a Layered Pane for this this application
         layeredPane = new JLayeredPane();
