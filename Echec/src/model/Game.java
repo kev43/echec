@@ -28,7 +28,7 @@ public interface Game  {
 	 * @return true si  piece du jeu peut être déplacée aux coordonnées finales,
 	 *  false sinon
 	 */
-	public boolean isMoveOk(int xInit, int yInit, int xFinal, int yFinal, boolean isCatchOk,
+	public boolean isMoveOk(int xInit, int yInit, int xFinal, int yFinal, boolean isCatching,
 			boolean isCastlingPossible);
 
 	/**

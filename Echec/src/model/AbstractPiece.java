@@ -48,7 +48,7 @@ public abstract class AbstractPiece implements Pieces {
     
     public abstract boolean isMoveOk(int xFinal,
                      int yFinal,
-                     boolean isCatchOk,
+                     boolean isCatching,
                      boolean isCastlingPossible);
     
     public boolean move(int xFinal, int yFinal) {

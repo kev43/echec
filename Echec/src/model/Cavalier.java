@@ -18,7 +18,7 @@ public class Cavalier extends AbstractPiece {
     }
 
     @Override
-    public boolean isMoveOk(int xFinal, int yFinal, boolean isCatchOk, boolean isCastlingPossible) {
+    public boolean isMoveOk(int xFinal, int yFinal, boolean isCatching, boolean isCastlingPossible) {
         
 //        int cx[8], cy[8];
 //            cx[0] = 1; cx[1] = 2;cx[2] = 2;cx[3] = 1;cx[4] = -1;cx[5] = -2;cx[6] = -2;cx[7] = -1;

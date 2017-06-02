@@ -17,7 +17,7 @@ public class Reine extends AbstractPiece {
     }
 
     @Override
-    public boolean isMoveOk(int xFinal, int yFinal, boolean isCatchOk, boolean isCastlingPossible) {
+    public boolean isMoveOk(int xFinal, int yFinal, boolean isCatching, boolean isCastlingPossible) {
     //deplacements reine = tour + fou    
     //test déplacements de la tour
         if (xFinal == this.x && yFinal != this.y) {

@@ -17,7 +17,7 @@ public class Roi extends AbstractPiece {
     }
 
     @Override
-    public boolean isMoveOk(int xFinal, int yFinal, boolean isCatchOk, boolean isCastlingPossible) {
+    public boolean isMoveOk(int xFinal, int yFinal, boolean isCatching, boolean isCastlingPossible) {
         for (int i=-1 ; i<=1 ; i++) {
             for (int j=-1 ; j<=1 ; j++){              
                 if (!(i ==0 && j==0)) {

@@ -20,7 +20,7 @@ public class Tour extends AbstractPiece {
     @Override
     public boolean isMoveOk(int xFinal, 
                             int yFinal, 
-                            boolean isCatchOk, 
+                            boolean isCatching, 
                             boolean isCastlingPossible) {
         // déplacement de la Tour
 

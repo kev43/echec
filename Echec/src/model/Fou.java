@@ -18,7 +18,7 @@ public class Fou extends AbstractPiece {
     }
     
     @Override
-    public boolean isMoveOk(int xFinal, int yFinal, boolean isCatchOk, boolean isCastlingPossible) {
+    public boolean isMoveOk(int xFinal, int yFinal, boolean isCatching, boolean isCastlingPossible) {
         
         int deltaX = xFinal - x;
         int deltaY = yFinal - y;
