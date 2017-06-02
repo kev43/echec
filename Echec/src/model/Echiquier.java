@@ -158,6 +158,13 @@ public class Echiquier implements BoardGames {
         return c;
     }
     
+    public boolean isPieceHere(int x, int y) {
+        boolean res = false;
+        if((res=jeux[0].isPieceHere(x, y))==false);
+        else res= jeux[1].isPieceHere(x, y);
+        return res;
+    }
+    
     public void switchJoueur() {
         if (isBlancCourant) {
             // à Noir de jouer
