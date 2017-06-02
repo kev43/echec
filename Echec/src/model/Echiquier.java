@@ -37,6 +37,13 @@ public class Echiquier implements BoardGames {
         indiceJeuCourant = 0;
     }
     
+    public boolean isMoveOk(int xInit,
+                            int yInit,
+                            int xFinal,
+                            int yFinal) {
+        return isMoveOk(xInit, yInit, xFinal, yFinal, indiceJeuCourant);
+    }
+    
     /**
      * Indique si un coup est autorisé ou non.
      * Ne modifie pas l'échiquier.
@@ -53,10 +60,11 @@ public class Echiquier implements BoardGames {
     public boolean isMoveOk(int xInit,
                             int yInit,
                             int xFinal,
-                            int yFinal) {
+                            int yFinal,
+                            int indiceJeuActif) {
         
         //s'il n'existe pas de piece du jeu courant aux coordonnées initiales
-        if (jeux[indiceJeuCourant].getPieceName(xInit, yInit) == null){
+        if (jeux[indiceJeuActif].getPieceName(xInit, yInit) == null){
             return false;
         }
         
@@ -71,7 +79,7 @@ public class Echiquier implements BoardGames {
         }
         
         boolean isCatching = false;
-        Couleur couleurCourante = jeux[indiceJeuCourant].getCouleur();
+        Couleur couleurCourante = jeux[indiceJeuActif].getCouleur();
         Couleur couleurFinale = getPieceColor(xFinal, yFinal);
         // est-ce que le coup correspond à une capture de pièce
         if (couleurFinale != null && !couleurFinale.equals(couleurCourante)) {
@@ -79,22 +87,22 @@ public class Echiquier implements BoardGames {
         }
         
         // si la position finale ne correspond pas à un déplacement valide de la pièce
-        if (!jeux[indiceJeuCourant].isMoveOk(xInit, yInit, xFinal, yFinal, isCatching, isCastlingPossible)) {
+        if (!jeux[indiceJeuActif].isMoveOk(xInit, yInit, xFinal, yFinal, isCatching, isCastlingPossible)) {
             return false;
         }
         
         // s'il existe une pièce intermédiaire sur la trajectoire
-        if (existPiecesIntermediaires(xInit, yInit, xFinal, yFinal)) {
+        if (existPiecesIntermediaires(xInit, yInit, xFinal, yFinal, indiceJeuActif)) {
             return false;
         }
         
         // s'il existe une pièce positionnée aux coordonnées finales
         if (isPieceHere(xFinal, yFinal)) {
-            Couleur couleur = jeux[indiceJeuCourant].getPieceColor(xFinal, yFinal);
+            Couleur couleur = jeux[indiceJeuActif].getPieceColor(xFinal, yFinal);
             if ((couleur == couleurCourante)) {
                 // pièce de la mâme couleur
-                if (jeux[indiceJeuCourant].getPieceName(xInit, yInit).equals("Roi") 
-                        && jeux[indiceJeuCourant].getPieceName(xFinal, yFinal).equals("Tour")) {
+                if (jeux[indiceJeuActif].getPieceName(xInit, yInit).equals("Roi") 
+                        && jeux[indiceJeuActif].getPieceName(xFinal, yFinal).equals("Tour")) {
                     // tentative de roque
                     // jeuCourant.setCastling();
                     
@@ -291,9 +299,9 @@ public class Echiquier implements BoardGames {
      * @param yFinal coordonnées y arrivée
      * @return boolean true s'il y a des pièces obstacle, false s'il n'y en a pas
      */
-    private boolean existPiecesIntermediaires(int xInit, int yInit, int xFinal, int yFinal) {
+    private boolean existPiecesIntermediaires(int xInit, int yInit, int xFinal, int yFinal, int indiceJeuActif) {
         boolean res = false;
-        String pieceName = jeux[indiceJeuCourant].getPieceName(xInit, yInit);
+        String pieceName = jeux[indiceJeuActif].getPieceName(xInit, yInit);
         int x = 0, y = 0;
         // on n'a pas besoin de vérifier pour Cavalier ni pour Roi
         switch (pieceName) {
@@ -421,6 +429,36 @@ public class Echiquier implements BoardGames {
                 
                 break;
         }
+        
         return res;
     }
+    
+            
+    public boolean estMenacee(int xCible, int yCible) {
+        boolean res = false;
+        
+        for (int y = 0; y < 8; y++) {
+            for (int x = 0; x < 8; x++) {
+                if (isMoveOk(x, y, xCible, yCible, (indiceJeuCourant+1)%2)) {
+                    res = true;
+                    System.out.println("Pièce attaquée : ("+xCible+","+yCible+")");
+                }
+            }
+        }
+        
+        return res;
+    }
+    
+    public List<Coord> getCasesMenacees() {
+        List<Coord> list = new ArrayList();
+        for (int y = 0; y < 8; y++) {
+            for (int x = 0; x < 8; x++) {
+                if (estMenacee(x, y)) {
+                    list.add(new Coord(x, y));
+                }
+            }
+        }
+        return list;
+    }
+
 }

@@ -297,7 +297,7 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
         private void showCasesMenaces() {
         
         //appel de la méthode du controleur qui retourne la liste des coordonnée à modifier
-        List<Coord> listCoord = new LinkedList<>(chessGameControler.getCasesMenaces());
+        List<Coord> listCoord = new LinkedList<>(chessGameControler.getCasesMenacees());
         
         for (Coord coord : listCoord) {
             int x = (coord.x * (this.chessBoard.getWidth() / 8));

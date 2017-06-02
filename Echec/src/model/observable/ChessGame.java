@@ -92,6 +92,10 @@ public class ChessGame extends Observable implements BoardGames{
 	public List<Coord> getPossibleMoves(int xInit, int yInit) {
             return echiquier.getPossibleMoves(xInit, yInit);
         }
+        
+        public List<Coord> getCasesMenacees() {
+            return echiquier.getCasesMenacees();
+        }
 
 	/* (non-Javadoc)
 	 * @see java.util.Observable#notifyObservers(java.lang.Object)

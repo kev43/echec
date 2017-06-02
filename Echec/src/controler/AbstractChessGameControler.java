@@ -97,4 +97,8 @@ public abstract class AbstractChessGameControler implements ChessGameControlers 
         public List<Coord> getPossibleMoves(int xInit, int yInit) {
             return chessGame.getPossibleMoves(xInit, yInit);
         }
+        
+        public List<Coord> getCasesMenacees() {
+            return chessGame.getCasesMenacees();
+        }
 }

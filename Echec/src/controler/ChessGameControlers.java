@@ -31,4 +31,6 @@ public interface ChessGameControlers {
 	public boolean isPlayerOK(Coord initCoord);
         
         public List<Coord> getPossibleMoves(int xInit, int yInit);
+        
+        public List<Coord> getCasesMenacees();
 }
