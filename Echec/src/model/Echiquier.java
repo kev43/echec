@@ -282,7 +282,60 @@ public class Echiquier implements BoardGames {
                     break;
                 }
             case "Fou":
-                
+                System.out.println("("+xInit+","+yInit+") -> ("+xFinal+","+yFinal+")");
+                if (xInit < xFinal && yFinal < yInit) {
+                    // déplacement Nord-Est
+                    x = xInit+1;
+                    y = yInit-1;
+                    while (x < xFinal && y > yFinal) {
+                        System.out.println("x="+x+" y="+y);
+                        if (isPieceHere(x, y)) {
+                            res = true;
+                            break;
+                        }
+                        x++;
+                        y--;
+                    }
+                } else if (xInit < xFinal && yFinal > yInit) {
+                    // déplacement Sud-Est
+                    x = xInit+1;
+                    y = yInit+1;
+                    while (x < xFinal && y < yFinal) {
+                        System.out.println("x="+x+" y="+y);
+                        if (isPieceHere(x, y)) {
+                            res = true;
+                            break;
+                        }
+                        x++;
+                        y++;
+                    }
+                } else if (xFinal < xInit && yFinal > yInit) {
+                    // déplacement Sud-Ouest
+                    x = xInit-1;
+                    y = yInit+1;
+                    while (x > xFinal && y < yFinal) {
+                        System.out.println("x="+x+" y="+y);
+                        if (isPieceHere(x, y)) {
+                            res = true;
+                            break;
+                        }
+                        x--;
+                        y++;
+                    }
+                } else if (xFinal < xInit && yFinal < yInit) {
+                    // déplacement Nord-Ouest
+                    x = xInit-1;
+                    y = yInit-1;
+                    while (x > xFinal && y > yFinal) {
+                        System.out.println("x="+x+" y="+y);
+                        if (isPieceHere(x, y)) {
+                            res = true;
+                            break;
+                        }
+                        x--;
+                        y--;
+                    }
+                }
                 
                 
                 break;
