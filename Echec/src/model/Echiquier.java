@@ -152,7 +152,10 @@ public class Echiquier implements BoardGames {
 
     @Override
     public Couleur getPieceColor(int x, int y) {
-        return jeux[indiceJeuCourant].getPieceColor(x, y);
+        Couleur c = null ;
+        if((c=jeux[0].getPieceColor(x, y))==null);
+        else c= jeux[1].getPieceColor(x, y);
+        return c;
     }
     
     public void switchJoueur() {
