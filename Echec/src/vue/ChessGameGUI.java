@@ -6,7 +6,6 @@
 package vue;
 
 import controler.ChessGameControlers;
-import controler.controlerLocal.ChessGameControler;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -39,7 +38,6 @@ import tools.ChessImageProvider;
 public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionListener, Observer {
 
     private ChessGameControlers chessGameControler;
-
     private JLayeredPane layeredPane;
     private JPanel chessBoard;
     private JLabel chessPiece;
@@ -49,6 +47,13 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
     // Coordonnées de la position initiale de la pièce déplacée
     private Coord coordInit;
 
+    /**
+     * Constrcuteur de la classe ChessGameGUI. 
+     * Méthode crée les composants de l'interface graphique et les affichent.
+     * @param title
+     * @param chessGameControler
+     * @param dim 
+     */
     public ChessGameGUI(String title, ChessGameControlers chessGameControler, Dimension dim) {
         super(title);
         this.chessGameControler = chessGameControler;
@@ -83,11 +88,19 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
 
     }
 
+    /**
+     * Méthode mouseClicked non utilisée.
+     * @param e 
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
 
     }
 
+    /**
+     * Vérifie que le joueur actuel a le droit de déplacer la pièce choisie , ajoute la pièce à un DRAG_LAYER et montre les différents déplacements possibles.
+     * @param e 
+     */
     @Override
     public void mousePressed(MouseEvent e) {
 
@@ -122,6 +135,10 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
         }
     }
 
+    /**
+     * Pose la pièce déplacée sur la case choisie si le déplacement est autorisé, sinon la pièce est remise à sa position initiale
+     * @param e 
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         if (chessPiece == null) {
@@ -158,16 +175,28 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
         chessPiece.setVisible(true);
     }
 
+    /**
+     * Méthode mouseEntered non utilisée
+     * @param e 
+     */
     @Override
     public void mouseEntered(MouseEvent e) {
 
     }
 
+    /**
+     * Méthode mouseExited non utilisée
+     * @param e 
+     */
     @Override
     public void mouseExited(MouseEvent e) {
 
     }
 
+    /**
+     * Déplace la pièce cliquée en fonction de la position de la souris
+     * @param e 
+     */
     @Override
     public void mouseDragged(MouseEvent e) {
         if (chessPiece == null) {
@@ -176,6 +205,10 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
         chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
     }
 
+    /**
+     * Méthode mouseMoved non utilisée
+     * @param e 
+     */
     @Override
     public void mouseMoved(MouseEvent e) {
         
@@ -185,6 +218,11 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
         System.out.println("("+x+","+y+")");*/
     }
 
+    /**
+     * Raffraichit l'affichage de l'interface graphique  en fonction des modifications appliquées au modèle après un déplacement.
+     * @param o
+     * @param arg 
+     */
     @Override
     public void update(Observable o, Object arg) {
         System.out.println(chessGameControler.getMessage());
@@ -220,6 +258,11 @@ public class ChessGameGUI extends JFrame implements MouseListener, MouseMotionLi
 
     }
     
+    /**
+     * Affiche sur l'interface les différents movements possibles pour la pièce sélectionnée
+     * @param xInit
+     * @param yInit 
+     */
     private void showPossibleMoves(int xInit , int yInit) {
         
         //appel de la méthode du controleur qui retourne la liste des coordonnée à modifier

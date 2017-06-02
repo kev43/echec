@@ -12,11 +12,24 @@ package model;
  */
 public class Tour extends AbstractPiece {
     
+    /**
+     * 
+     * @param couleur
+     * @param coord 
+     */
     public Tour(Couleur couleur, Coord coord) {
         super(couleur, coord);
         name = "Tour";
     }
     
+    /**
+     * Renvoi un true si le mouvement de la pièce est autorisé
+     * @param xFinal
+     * @param yFinal
+     * @param isCatching , Mettre à True dans le cas d'une capture avec un pion
+     * @param isCastlingPossible , Mettre à True dans le cas d'un Roque du roi
+     * @return 
+     */
     @Override
     public boolean isMoveOk(int xFinal, 
                             int yFinal, 
